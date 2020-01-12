@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/pairsFragment">
+
+    <fragment
+        android:id="@+id/pairsFragment"
+        android:name="ru.sinx.coins.ui.pairs.fragment.PairsFragment"
+        android:label="fragment_pair"
+        tools:layout="@layout/fragment_pairs" >
+        <action
+            android:id="@+id/action_pairsFragment_to_addPairFragment"
+            app:destination="@id/addPairFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addPairFragment"
+        android:name="ru.sinx.coins.ui.addpair.fragment.AddPairFragment"
+        android:label="fragment_add_pair"
+        tools:layout="@layout/fragment_add_pair" />
+</navigation>
