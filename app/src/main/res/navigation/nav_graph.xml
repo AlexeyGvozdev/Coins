@@ -13,10 +13,18 @@
         <action
             android:id="@+id/action_pairsFragment_to_addPairFragment"
             app:destination="@id/addPairFragment" />
+        <action
+            android:id="@+id/action_pairsFragment_to_pairDescriptionFragment"
+            app:destination="@id/pairDescriptionFragment" />
     </fragment>
     <fragment
         android:id="@+id/addPairFragment"
         android:name="ru.sinx.coins.ui.addpair.fragment.AddPairFragment"
         android:label="fragment_add_pair"
         tools:layout="@layout/fragment_add_pair" />
+    <fragment
+        android:id="@+id/pairDescriptionFragment"
+        android:name="ru.sinx.coins.PairDescriptionFragment"
+        android:label="fragment_pair_description"
+        tools:layout="@layout/fragment_pair_description" />
 </navigation>

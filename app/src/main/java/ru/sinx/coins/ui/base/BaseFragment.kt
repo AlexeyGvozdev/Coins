@@ -23,9 +23,4 @@ abstract class BaseFragment : Fragment() {
     ): View? {
         return inflater.inflate(layout, container, false)
     }
-
-    override fun onDestroyView() {
-//        fragmentNavigator = null
-        super.onDestroyView()
-    }
 }
