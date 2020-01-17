@@ -7,6 +7,7 @@ import ru.sinx.coins.navigation.NavigationException
 import ru.sinx.coins.navigation.pairs.provider.PairNavCommandProvider
 import ru.sinx.coins.repository.pairs.PairRepositoryProvider
 import ru.sinx.coins.ui.pairs.status.Status
+import ru.sinx.coins.utils.Currency
 import ru.sinx.coins.utils.PairCurrency
 
 class PairsViewModule(
@@ -23,8 +24,17 @@ class PairsViewModule(
     fun loadPairs() {
         viewModelScope.launch {
             try {
-                val listPairs = pairRepositoryProvider.fetchListPairs()
-                liveData.value = Status.Loaded(listPairs)
+                liveData.value = Status.Loading
+                val listPair = listOf(
+                    PairCurrency(Currency("BTC"), Currency("USD")),
+                    PairCurrency(Currency("BTC"), Currency("RUB")),
+                    PairCurrency(Currency("XRP"), Currency("USD")),
+                    PairCurrency(Currency("XRP"), Currency("RUB")),
+                    PairCurrency(Currency("ETH"), Currency("USD")),
+                    PairCurrency(Currency("ETH"), Currency("RUB"))
+                )
+                val listPairsWithBidTop = pairRepositoryProvider.fetchListPairs(listPair)
+                liveData.value = Status.Loaded(listPairsWithBidTop)
             } catch (e: Throwable) {
                 liveData.value = Status.Error(e.message ?: e.toString())
             }

@@ -2,14 +2,13 @@ package ru.sinx.coins.ui.pairs.fragment
 
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.fragment_pairs.*
 import ru.sinx.coins.R
+import ru.sinx.coins.di.services.api.Api
 import ru.sinx.coins.extensions.hide
 import ru.sinx.coins.extensions.navigate
 import ru.sinx.coins.extensions.show
@@ -21,7 +20,6 @@ import ru.sinx.coins.ui.pairs.adapter.PairsAdapter
 import ru.sinx.coins.ui.pairs.status.Status
 import ru.sinx.coins.ui.pairs.viewmodel.PairsViewModule
 import ru.sinx.coins.utils.NavCommand
-import java.lang.ref.WeakReference
 
 /**
  * A simple [Fragment] subclass.
@@ -41,13 +39,13 @@ class PairsFragment : BaseFragment() {
         override fun navigate(navCommand: NavCommand) {
             this@PairsFragment.navigate(navCommand)
         }
-
     }
 
     private val viewModel: PairsViewModule = PairsViewModule(
-        PairRepositoryProviderImpl(),
+        PairRepositoryProviderImpl(Api.FakeApi()),
         PairNavCommandProviderImpl(),
-        navigator);
+        navigator
+    );
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -75,6 +73,4 @@ class PairsFragment : BaseFragment() {
             viewModel.onAddPairClick()
         }
     }
-
-
 }
