@@ -42,10 +42,10 @@ class PairsFragment : BaseFragment() {
     }
 
     private val viewModel: PairsViewModule = PairsViewModule(
-        PairRepositoryProviderImpl(Api.FakeApi()),
+        PairRepositoryProviderImpl(Api.FakeApiCorrect()),
         PairNavCommandProviderImpl(),
         navigator
-    );
+    )
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
