@@ -50,6 +50,9 @@ class PairsFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         lifecycle.addObserver(viewModel)
+        sr_refresh_pair.setOnRefreshListener {
+            viewModel.reloadPairs()
+        }
         adapter.setOnClickListener {
             viewModel.onPairClick(it)
         }
@@ -66,6 +69,20 @@ class PairsFragment : BaseFragment() {
                 is Status.Loaded -> {
                     progress_pairs.hide()
                     adapter.setListPair(it.data)
+                    tv_empty_pairs.hide()
+                }
+                is Status.LoadedRefresh -> {
+                    sr_refresh_pair.isRefreshing = false
+                    adapter.setListPair(it.data)
+                }
+                is Status.Refresh -> {
+                    sr_refresh_pair.isRefreshing = true
+                }
+                is Status.NotHavePairs -> {
+                    rv_pairs.hide()
+                    sr_refresh_pair.isRefreshing = false
+                    progress_pairs.hide()
+                    tv_empty_pairs.show()
                 }
             }
         })

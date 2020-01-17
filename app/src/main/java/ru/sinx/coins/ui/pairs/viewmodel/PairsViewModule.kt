@@ -24,17 +24,13 @@ class PairsViewModule(
     fun loadPairs() {
         viewModelScope.launch {
             try {
-                liveData.value = Status.Loading
-                val listPair = listOf(
-                    PairCurrency(Currency("BTC"), Currency("USD")),
-                    PairCurrency(Currency("BTC"), Currency("RUB")),
-                    PairCurrency(Currency("XRP"), Currency("USD")),
-                    PairCurrency(Currency("XRP"), Currency("RUB")),
-                    PairCurrency(Currency("ETH"), Currency("USD")),
-                    PairCurrency(Currency("ETH"), Currency("RUB"))
-                )
-                val listPairsWithBidTop = pairRepositoryProvider.fetchListPairs(listPair)
-                liveData.value = Status.Loaded(listPairsWithBidTop)
+                val listPair = pairRepositoryProvider.fetchLocalPairs()
+                if (listPair.isEmpty()) {
+                    liveData.value = Status.NotHavePairs
+                } else {
+                    val listPairsWithBidTop = pairRepositoryProvider.fetchListPairs(listPair)
+                    liveData.value = Status.Loaded(listPairsWithBidTop)
+                }
             } catch (e: Throwable) {
                 liveData.value = Status.Error(e.message ?: e.toString())
             }
@@ -47,5 +43,25 @@ class PairsViewModule(
 
     fun onPairClick(pairCurrency: PairCurrency) {
         fragmentNavigator.navigate(navigation.toPairDescription(pairCurrency))
+    }
+
+    fun reloadPairs() {
+        try {
+            viewModelScope.launch {
+                try {
+                    val listPair = pairRepositoryProvider.fetchLocalPairs()
+                    if (listPair.isEmpty()) {
+                        liveData.value = Status.NotHavePairs
+                    } else {
+                        val listPairsWithBidTop = pairRepositoryProvider.fetchListPairs(listPair)
+                        liveData.value = Status.LoadedRefresh(listPairsWithBidTop)
+                    }
+                } catch (e: Throwable) {
+                    liveData.value = Status.Error(e.message ?: e.toString())
+                }
+            }
+        } catch (t: Throwable) {
+            liveData.value = Status.Error(t.message ?: t.toString())
+        }
     }
 }

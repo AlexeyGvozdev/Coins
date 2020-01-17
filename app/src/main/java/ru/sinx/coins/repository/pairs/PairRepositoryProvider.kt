@@ -5,4 +5,5 @@ import ru.sinx.coins.utils.PairCurrencyWithBidTop
 
 interface PairRepositoryProvider {
     suspend fun fetchListPairs(listPair: List<PairCurrency>): List<PairCurrencyWithBidTop>
+    suspend fun fetchLocalPairs(): List<PairCurrency>
 }
