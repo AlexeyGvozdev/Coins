@@ -20,6 +20,7 @@ import ru.sinx.coins.ui.pairs.adapter.PairsAdapter
 import ru.sinx.coins.ui.pairs.status.Status
 import ru.sinx.coins.ui.pairs.viewmodel.PairsViewModule
 import ru.sinx.coins.utils.NavCommand
+import javax.inject.Inject
 
 /**
  * A simple [Fragment] subclass.
@@ -41,15 +42,13 @@ class PairsFragment : BaseFragment() {
         }
     }
 
-    private val viewModel: PairsViewModule = PairsViewModule(
-        PairRepositoryProviderImpl(Api.FakeApiCorrect()),
-        PairNavCommandProviderImpl(),
-        navigator
-    )
+    @Inject
+    lateinit var viewModel: PairsViewModule
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         lifecycle.addObserver(viewModel)
+        viewModel.bindNavigator(navigator)
         sr_refresh_pair.setOnRefreshListener {
             viewModel.reloadPairs()
         }

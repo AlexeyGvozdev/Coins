@@ -6,15 +6,16 @@ import ru.sinx.coins.navigation.FragmentNavigator
 import ru.sinx.coins.navigation.NavigationException
 import ru.sinx.coins.navigation.pairs.provider.PairNavCommandProvider
 import ru.sinx.coins.repository.pairs.PairRepositoryProvider
+import ru.sinx.coins.ui.base.BaseViewModel
 import ru.sinx.coins.ui.pairs.status.Status
 import ru.sinx.coins.utils.Currency
 import ru.sinx.coins.utils.PairCurrency
+import javax.inject.Inject
 
-class PairsViewModule(
+class PairsViewModule @Inject constructor(
     private val pairRepositoryProvider: PairRepositoryProvider,
-    private val navigation: PairNavCommandProvider,
-    private var fragmentNavigator: FragmentNavigator
-) : ViewModel(), LifecycleObserver {
+    private val navigation: PairNavCommandProvider
+) : BaseViewModel(), LifecycleObserver {
 
     val liveData: MutableLiveData<Status> = MutableLiveData<Status>().apply {
         value = Status.Loading
@@ -38,11 +39,11 @@ class PairsViewModule(
     }
 
     fun onAddPairClick() {
-        fragmentNavigator.navigate(navigation.toAddPair)
+        fragmentNavigator?.navigate(navigation.toAddPair)
     }
 
     fun onPairClick(pairCurrency: PairCurrency) {
-        fragmentNavigator.navigate(navigation.toPairDescription(pairCurrency))
+        fragmentNavigator?.navigate(navigation.toPairDescription(pairCurrency))
     }
 
     fun reloadPairs() {
