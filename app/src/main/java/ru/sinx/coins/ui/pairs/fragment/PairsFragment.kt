@@ -8,13 +8,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.fragment_pairs.*
 import ru.sinx.coins.R
-import ru.sinx.coins.di.services.api.Api
 import ru.sinx.coins.extensions.hide
 import ru.sinx.coins.extensions.navigate
 import ru.sinx.coins.extensions.show
 import ru.sinx.coins.navigation.FragmentNavigator
-import ru.sinx.coins.navigation.pairs.implementation.PairNavCommandProviderImpl
-import ru.sinx.coins.repository.pairs.PairRepositoryProviderImpl
 import ru.sinx.coins.ui.base.BaseFragment
 import ru.sinx.coins.ui.pairs.adapter.PairsAdapter
 import ru.sinx.coins.ui.pairs.status.Status

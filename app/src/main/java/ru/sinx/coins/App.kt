@@ -1,16 +1,25 @@
 package ru.sinx.coins
 
-import dagger.android.AndroidInjector
-import dagger.android.DaggerApplication
+import android.app.Application
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.HasAndroidInjector
 import ru.sinx.coins.di.DaggerApplicationComponent
+import javax.inject.Inject
 
 
-class App : DaggerApplication() {
+open class App : Application(), HasAndroidInjector {
 
-    override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
-        return DaggerApplicationComponent
+    override fun onCreate() {
+        super.onCreate()
+        DaggerApplicationComponent
             .factory()
             .create(this)
+            .inject(this)
     }
+
+    @Inject
+    lateinit var dispatchingActivityInjector: DispatchingAndroidInjector<Any>
+
+    override fun androidInjector() = dispatchingActivityInjector
 
 }
