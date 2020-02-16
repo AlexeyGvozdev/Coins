@@ -9,8 +9,8 @@ import ru.sinx.coins.R
 
 class ContainerActivity : DaggerAppCompatActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         setContentView(R.layout.container_activity)
     }
 
