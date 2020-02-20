@@ -8,6 +8,7 @@ import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
+import org.hamcrest.core.IsNot
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -50,10 +51,13 @@ class PairsFragmentTest {
         onView(ViewMatchers.withId(R.id.fb_add_pair)).check(matches(isDisplayed()))
     }
 
-//    @Test
-//    fun show_hide_progress() {
-//
-//
-//    }
+    @Test
+    fun show_and_hide_progress() {
+        onView(ViewMatchers.withId(R.id.progress_pairs)).check(matches(isDisplayed()))
+        Thread.sleep(4000)
+        onView(ViewMatchers.withId(R.id.progress_pairs)).check(matches(IsNot.not(isDisplayed())))
+    }
+
+
 
 }

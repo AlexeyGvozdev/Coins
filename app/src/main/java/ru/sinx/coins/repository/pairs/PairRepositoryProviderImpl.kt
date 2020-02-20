@@ -20,12 +20,12 @@ class PairRepositoryProviderImpl(private val api: Api) : PairRepositoryProvider 
     override suspend fun fetchLocalPairs(): List<PairCurrency> {
         delay(1000)
         return listOf(
-//            PairCurrency(Currency("BTC"), Currency("USD")),
+            PairCurrency(Currency("BTC"), Currency("USD")),
 //            PairCurrency(Currency("BTC"), Currency("RUB")),
 //            PairCurrency(Currency("XRP"), Currency("USD")),
 //            PairCurrency(Currency("XRP"), Currency("RUB")),
 //            PairCurrency(Currency("ETH"), Currency("USD")),
-//            PairCurrency(Currency("ETH"), Currency("RUB"))
+            PairCurrency(Currency("ETH"), Currency("RUB"))
         )
     }
 }
