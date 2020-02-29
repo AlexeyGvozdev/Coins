@@ -21,7 +21,15 @@
         android:id="@+id/addPairFragment"
         android:name="ru.sinx.coins.ui.addpair.fragment.AddPairFragment"
         android:label="fragment_add_pair"
-        tools:layout="@layout/fragment_add_pair" />
+        tools:layout="@layout/fragment_add_pair" >
+
+        <action
+            android:id="@+id/action_back_from_add_pairs_to_pairs_fragment"
+            app:destination="@id/pairsFragment"
+            app:popUpTo="@id/pairsFragment"
+            app:popUpToInclusive="true"/>
+
+    </fragment>
     <fragment
         android:id="@+id/pairDescriptionFragment"
         android:name="ru.sinx.coins.PairDescriptionFragment"

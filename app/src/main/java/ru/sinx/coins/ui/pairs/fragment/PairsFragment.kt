@@ -33,12 +33,6 @@ class PairsFragment : BaseFragment() {
 
     override val layout: Int = R.layout.fragment_pairs
 
-    private var navigator: FragmentNavigator = object : FragmentNavigator {
-        override fun navigate(navCommand: NavCommand) {
-            this@PairsFragment.navigate(navCommand)
-        }
-    }
-
     @Inject
     lateinit var viewModel: PairsViewModule
 

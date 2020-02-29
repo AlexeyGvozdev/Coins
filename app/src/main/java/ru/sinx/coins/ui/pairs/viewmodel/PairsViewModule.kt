@@ -2,19 +2,16 @@ package ru.sinx.coins.ui.pairs.viewmodel
 
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
-import ru.sinx.coins.navigation.FragmentNavigator
-import ru.sinx.coins.navigation.NavigationException
 import ru.sinx.coins.navigation.pairs.provider.PairNavCommandProvider
 import ru.sinx.coins.repository.pairs.PairRepositoryProvider
 import ru.sinx.coins.ui.base.BaseViewModel
 import ru.sinx.coins.ui.pairs.status.Status
-import ru.sinx.coins.utils.Currency
 import ru.sinx.coins.utils.PairCurrency
 import javax.inject.Inject
 
 class PairsViewModule @Inject constructor(
-    private val pairRepositoryProvider: PairRepositoryProvider,
-    private val navigation: PairNavCommandProvider
+    private val repository: PairRepositoryProvider,
+    private val navCommands: PairNavCommandProvider
 ) : BaseViewModel(), LifecycleObserver {
 
     val liveData: MutableLiveData<Status> = MutableLiveData<Status>().apply {
@@ -25,11 +22,11 @@ class PairsViewModule @Inject constructor(
     fun loadPairs() {
         viewModelScope.launch {
             try {
-                val listPair = pairRepositoryProvider.fetchLocalPairs()
+                val listPair = repository.fetchLocalPairs()
                 if (listPair.isEmpty()) {
                     liveData.value = Status.NotHavePairs
                 } else {
-                    val listPairsWithBidTop = pairRepositoryProvider.fetchListPairs(listPair)
+                    val listPairsWithBidTop = repository.fetchListPairs(listPair)
                     liveData.value = Status.Loaded(listPairsWithBidTop)
                 }
             } catch (e: Throwable) {
@@ -39,22 +36,22 @@ class PairsViewModule @Inject constructor(
     }
 
     fun onAddPairClick() {
-        fragmentNavigator?.navigate(navigation.toAddPair)
+        fragmentNavigator?.navigate(navCommands.toAddPair)
     }
 
     fun onPairClick(pairCurrency: PairCurrency) {
-        fragmentNavigator?.navigate(navigation.toPairDescription(pairCurrency))
+        fragmentNavigator?.navigate(navCommands.toPairDescription(pairCurrency))
     }
 
     fun reloadPairs() {
         try {
             viewModelScope.launch {
                 try {
-                    val listPair = pairRepositoryProvider.fetchLocalPairs()
+                    val listPair = repository.fetchLocalPairs()
                     if (listPair.isEmpty()) {
                         liveData.value = Status.NotHavePairs
                     } else {
-                        val listPairsWithBidTop = pairRepositoryProvider.fetchListPairs(listPair)
+                        val listPairsWithBidTop = repository.fetchListPairs(listPair)
                         liveData.value = Status.LoadedRefresh(listPairsWithBidTop)
                     }
                 } catch (e: Throwable) {

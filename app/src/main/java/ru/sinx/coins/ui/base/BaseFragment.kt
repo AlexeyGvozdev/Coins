@@ -12,6 +12,9 @@ import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
 import dagger.android.support.AndroidSupportInjection
+import ru.sinx.coins.extensions.navigate
+import ru.sinx.coins.navigation.FragmentNavigator
+import ru.sinx.coins.utils.NavCommand
 import javax.inject.Inject
 
 abstract class BaseFragment : Fragment(), HasAndroidInjector {
@@ -21,6 +24,12 @@ abstract class BaseFragment : Fragment(), HasAndroidInjector {
 
     @get:LayoutRes
     abstract val layout: Int
+
+    protected var navigator: FragmentNavigator = object : FragmentNavigator {
+        override fun navigate(navCommand: NavCommand) {
+            this@BaseFragment.navigate(navCommand)
+        }
+    }
 
     override fun androidInjector(): AndroidInjector<Any> {
         return androidInjector

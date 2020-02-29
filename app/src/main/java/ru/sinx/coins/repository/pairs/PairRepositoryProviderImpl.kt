@@ -12,7 +12,8 @@ class PairRepositoryProviderImpl(private val api: Api) : PairRepositoryProvider 
         return listPair.map {
             PairCurrencyWithBidTop(
                 pairCurrency = it,
-                bidTop = api.fetchPair(DividerPairApi(it).toString()).bidTop
+//                bidTop = api.fetchPair(DividerPairApi(it).toString()).bidTop
+                bidTop = 3.3
             )
         }
     }
